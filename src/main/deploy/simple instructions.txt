@@ -1,0 +1,21 @@
+// This file can be used to pass instructions to the robots via PatternAutonomous.
+// Here's an example of this being done:
+// robot.addComponent(PatternAutonomous.createFromFile("simple instructions.txt", robot));
+
+// You can use double slashes or a hashtag anywhere in a line and all the text after it on the line will be omitted (commented out)
+// If you want to put instructions in here do so with the following syntax (without the hashtags):
+
+#   move 10               // Will move the robot forward '10'
+#   wait 15               // Will wait for '15' (should be 30ms)
+#   rotate 20             // Will rotate the robot by '20'
+#   rotate 10 move -15    // Will rotate the robot by '10' while also moving it backwards by '15'
+#   goto 1 1
+
+// Note that there are no units, this is because of how the wpilib api works.
+// The units should (but tend not to) represent 2ms, so 10 = 20ms. 
+// Which means that "move 10" would (hopefully) mean "move forward for 20ms"
+
+// Although this supports comments and simple instructions it isn't a coding language!!!
+// So don't try and do math or make a variable, that would just cause issues.
+
+
