@@ -16,7 +16,7 @@ public class MovementComponent extends ComponentBase {
         Joystick stick = robot.getJoystick();
         //  -stick.getY() gives an error:
         //CTR: Firm Vers could not be retrieved. Use Phoenix Tuner to check ID and firmware(CRF) version.
-        robot.move(stick.getY(), ALTERNATE_ROTATE ? stick.getZ() : stick.getX());
+        robot.move(stick.getY(), ALTERNATE_ROTATE ? stick.getZ() : stick.getX()); //Wwhat is an HID?
 
         
     }

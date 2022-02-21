@@ -16,10 +16,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.clp.CLPMotors;
 import frc.robot.events.*;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.servos.Servos;
+
 
 /**
  * This class contains the following important objects:
@@ -69,24 +72,38 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     }
 
     // Some important variables
-    private static final String kDefaultAuto = "Default";
-    private static final String kCustomAuto = "My Auto";
+    private static final String kDefaultAuto = "Default"; //What do these do? - Kyle
+    private static final String kCustomAuto = "My Auto";  //What do these do? - Kyle
+
+    /** 
+     * For drive team: Joystick slot is determined here:
+    **/
 
     /** This variable controls the slot the joystick is created from.*/
-    private static final int DEFAULT_JOYSTICK_SLOT = 1; // change it form 3 to 1
+    private static final int DEFAULT_JOYSTICK_SLOT = 1;
 
-    /** The motor controller plugged into the 1 slot, this should be the left motor controller. */
-    private final Spark leftMotor = new Spark(3);
-    private final Spark leftMotorSecondary = new Spark(2);
-    /** The motor controller plugged into the 3 slot, this should be the right motor controller. */
-    private final Spark rightMotor = new Spark(0);
-    private final Spark rightMotorSecondary = new Spark(1);
+    //The four drivebase motors controlled by the Spark motor controllers (m_frontLeft/m_frontRight and m_rearLeft/m_rearLeft these may not be entirely correct, I'll double check on Tuesday)
+    private final MotorController m_frontLeft = new Spark(3);
+    private final MotorController m_rearLeft = new Spark(2);
+    private final MotorController m_frontRight = new Spark(0);
+    private final MotorController m_rearRight  = new Spark(1);
+
+
     /** A Differential driver which contains the {@link Robot#leftMotor} and {@link Robot#rightMotor}. */
-    private final DifferentialDrive robotDrive = new DifferentialDrive(leftMotor, rightMotor);
-    private final DifferentialDrive robotDriveSecondary = new DifferentialDrive(leftMotorSecondary, rightMotorSecondary);
+    MotorControllerGroup m_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
+    MotorControllerGroup m_right = new MotorControllerGroup(m_frontRight, m_rearRight);
+
+    private final DifferentialDrive robotDrive = new DifferentialDrive(m_left, m_right); //In truth I don't understad what the object type SpeedController leftMotor is reffering to. Will need to look into on Tuesday
+    //private final DifferentialDrive robotDriveSecondary = new DifferentialDrive(leftMotorSecondary, rightMotorSecondary);
 
     /** A Joystick pulled from the port specified in {@link Robot#DEFAULT_JOYSTICK_SLOT}.  */
-    private final Joystick stick = new Joystick(3); // DEFAULT_JOYSTICK_SLOT
+
+    /** 
+     * For drive team: Joystick slot is determined here:
+    **/
+
+    private final Joystick stick = new Joystick(DEFAULT_JOYSTICK_SLOT); 
+
     /** This just exists for situations where you want to process the {@link Robot#stick} as an XboxController. Will probably be removed in a future version. */
     private final XboxController xboxController = new XboxController(DEFAULT_JOYSTICK_SLOT); //DEFAULT_JOYSTICK_SLOT
 
@@ -289,9 +306,17 @@ public class Robot /* Do not change class name */ extends TimedRobot {
      * @param moveAmount the amount the robot will move
      * @param rotation   the amount the robot will rotate
      */
+
+    
+ 
+
+
+
+
+
+
     public void move(double moveAmount, double rotation) {
         robotDrive.arcadeDrive(moveAmount, rotation);
-        robotDriveSecondary.arcadeDrive(moveAmount, rotation);
     }
 
     /**
@@ -319,15 +344,15 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     /**
      * @return The robot's left motor controller.
      */
-    public PWMVictorSPX getLeftMotor() {
-        return leftMotor;
+    public MotorControllerGroup getLeftMotor() {
+        return m_left;
     }
 
     /**
      * @return The robot's right motor controller.
      */
-    public PWMVictorSPX getRightMotor() {
-        return rightMotor;
+    public MotorControllerGroup getRightMotor() {
+        return m_right;
     }
 
     /**
