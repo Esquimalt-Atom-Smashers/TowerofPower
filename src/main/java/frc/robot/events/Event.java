@@ -8,7 +8,7 @@ public abstract class Event {
     private final Robot robot;
     private boolean consumed = false;
 
-    Event(Robot robot) {
+    protected Event(Robot robot) {
         this.robot = robot;
     }
 

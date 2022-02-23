@@ -13,7 +13,7 @@ import java.util.function.Predicate;
  * <p>
  *     This example prints: "Button 3 Pressed" every time button 3 is pressed after the second time it's triggered.
  *     <table>
- *   <tr>
+ *   <tz>
  *     <td> Pressed Button </td> <td> Result </td>
  *   </tr>
  *   <tr>
