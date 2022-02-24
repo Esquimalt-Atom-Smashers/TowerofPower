@@ -14,22 +14,34 @@ import frc.robot.Robot;
  * @see Filters
  */
 public abstract class Event {
-    
+
+    /** The robot that fired this event. */
     private final Robot robot;
+    /** If an event is consumed then subsequent event handler's shouldn't be called. This variable keeps track of that. */
     private boolean consumed = false;
 
+    /**
+     * Basic constructor for Event class.
+     * @param robot the robot that fired this event.
+     */
     protected Event(Robot robot) {
         this.robot = robot;
     }
 
+    /** @see Event#robot */
     public Robot getRobot() {
         return robot;
     }
 
+    /** @see Event#consumed */
     public boolean isConsumed() {
         return consumed;
     }
 
+    /**
+     * Consumes the event
+     * @see Event#consumed
+     */
     public void consumed() {
         this.consumed = true;
     }
