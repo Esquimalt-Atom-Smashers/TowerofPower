@@ -27,7 +27,7 @@ import frc.robot.servos.Servos;
 /**
  * This class contains the following important objects:
  * <li>
- *     The Joystick which is plugged into the computer running the robot, get with: {@link Robot#getJoystick()}
+ *     The Joystick which is plugged into the computer running the robot, can be accessed by other classes with: {@link Robot#getJoystick()}
  * </li>
  * <li>
  *     The left and right motors for the robot's drive base, these can be controlled simultaneously with a differential driver. Get left and right motor with: {@link Robot#getLeftMotor()}
@@ -71,15 +71,16 @@ public class Robot /* Do not change class name */ extends TimedRobot {
         return robot;
     }
 
-    // Some important variables
-    private static final String kDefaultAuto = "Default"; //What do these do? - Kyle
-    private static final String kCustomAuto = "My Auto";  //What do these do? - Kyle
+    // WPILib required variables.
+    private static final String kDefaultAuto = "Default";
+    private static final String kCustomAuto = "My Auto";
+    private String m_autoSelected;
+    private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-    /** 
-     * For drive team: Joystick slot is determined here:
-    **/
-
-    /** This variable controls the slot the joystick is created from.*/
+    /**
+     * <p> For drive team: Joystick slot is determined here: </p>
+     * This variable controls the slot the joystick is created from.
+     */
     private static final int DEFAULT_JOYSTICK_SLOT = 1;
 
     //The four drivebase motors controlled by the Spark motor controllers (m_frontLeft/m_frontRight and m_rearLeft/m_rearLeft these may not be entirely correct, I'll double check on Tuesday)
@@ -88,26 +89,22 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     private final MotorController m_frontRight = new Spark(0);
     private final MotorController m_rearRight  = new Spark(1);
 
+    private final MotorControllerGroup leftMotor = new MotorControllerGroup(m_frontLeft, m_rearLeft);
+    private final MotorControllerGroup rightMotor = new MotorControllerGroup(m_frontRight, m_rearRight);
 
     /** A Differential driver which contains the {@link Robot#leftMotor} and {@link Robot#rightMotor}. */
-    MotorControllerGroup m_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
-    MotorControllerGroup m_right = new MotorControllerGroup(m_frontRight, m_rearRight);
-
-    private final DifferentialDrive robotDrive = new DifferentialDrive(m_left, m_right); //In truth I don't understad what the object type SpeedController leftMotor is reffering to. Will need to look into on Tuesday
-    //private final DifferentialDrive robotDriveSecondary = new DifferentialDrive(leftMotorSecondary, rightMotorSecondary);
-
-    /** A Joystick pulled from the port specified in {@link Robot#DEFAULT_JOYSTICK_SLOT}.  */
+    private final DifferentialDrive robotDrive = new DifferentialDrive(leftMotor, rightMotor);
 
     /** 
      * For drive team: Joystick slot is determined here:
+     * A Joystick pulled from the port specified in {@link Robot#DEFAULT_JOYSTICK_SLOT}.
     **/
-
     private final Joystick stick = new Joystick(DEFAULT_JOYSTICK_SLOT); 
 
     /** This just exists for situations where you want to process the {@link Robot#stick} as an XboxController. Will probably be removed in a future version. */
-    private final XboxController xboxController = new XboxController(DEFAULT_JOYSTICK_SLOT); //DEFAULT_JOYSTICK_SLOT
+    private final XboxController xboxController = new XboxController(DEFAULT_JOYSTICK_SLOT);
 
-    /** A list of motor controllers used to control the CLP */
+    /* A list of motor controllers used to control the CLP */
     private final CLPMotors clpMotors = new CLPMotors(1, 2, 6);
     private final CLPMotors reversedMotors = new CLPMotors(5, 3, 4);
     private final WPI_VictorSPX intakeMotor1 = new WPI_VictorSPX(6);
@@ -131,9 +128,6 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     private EventHandler<SingleStickEvent> rightStickHandler;
     /** An event handler that receives a DpadEvent whenever the dpad on the joystick isn't in its original position. Gets called in {@link Robot#teleopPeriodic()} */
     private EventHandler<DpadEvent> dpadHandler;
-
-    private String m_autoSelected;
-    private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
     /** The list of components which the robot delegates work to, see: {@link Robot}, {@link Robot#addComponent(ComponentBase)} and {@link ComponentBase} */
     private final ArrayList<ComponentBase> components = new ArrayList<>();
@@ -174,7 +168,7 @@ public class Robot /* Do not change class name */ extends TimedRobot {
      * This autonomous (along with the chooser code above) shows how to select
      * between different autonomous modes using the dashboard. The sendable chooser
      * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
-     * remove all of the chooser code and uncomment the getString line to get the
+     * remove all the chooser code and uncomment the getString line to get the
      * auto name from the text box below the Gyro
      *
      * <p>
@@ -306,15 +300,6 @@ public class Robot /* Do not change class name */ extends TimedRobot {
      * @param moveAmount the amount the robot will move
      * @param rotation   the amount the robot will rotate
      */
-
-    
- 
-
-
-
-
-
-
     public void move(double moveAmount, double rotation) {
         robotDrive.arcadeDrive(moveAmount, rotation);
     }
@@ -345,14 +330,14 @@ public class Robot /* Do not change class name */ extends TimedRobot {
      * @return The robot's left motor controller.
      */
     public MotorControllerGroup getLeftMotor() {
-        return m_left;
+        return leftMotor;
     }
 
     /**
      * @return The robot's right motor controller.
      */
     public MotorControllerGroup getRightMotor() {
-        return m_right;
+        return rightMotor;
     }
 
     /**
