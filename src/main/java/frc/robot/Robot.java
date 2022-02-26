@@ -117,7 +117,7 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     private final WPI_VictorSPX intakeMotor2 = null;//new WPI_VictorSPX(5);
     private final WPI_VictorSPX shooterMotor = null;//new WPI_VictorSPX(1);
     /** A list of servos used to control the linear actuators. */
-    private final Servos actuatorServos = null;//new Servos(7, 8, 9, 0);
+    private final Servos intakeServos = new Servos(4, 5);
 
     /* ************************* *
      *      Event Variables
@@ -387,8 +387,8 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     /**
      * @return The robot's servos. These servos are used to control the linear actuators that move the CLP up and down. The returned object's class contains a list of servos as well as some convenience methods for running actions on all the servos in its list.
      */
-    public Servos getActuatorServos() {
-        return actuatorServos;
+    public Servos getIntakeServos() {
+        return intakeServos;
     }
 
     /**
