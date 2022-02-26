@@ -1,7 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-
+import edu.wpi.first.wpilibj.XboxController;
 /**
  * Component to move the robot when the controller joysticks are moved.
  */
@@ -24,8 +24,27 @@ public class MovementComponent extends ComponentBase {
      */
     @Override
     public void teleopPeriodic() {
-        Joystick stick = robot.getJoystick();
-        robot.move(stick.getY(), ALTERNATE_ROTATE ? stick.getZ() : stick.getX());
+        XboxController gamepad = robot.getXboxController();
+        //  -stick.getY() gives an error:
+        //CTR: Firm Vers could not be retrieved. Use Phoenix Tuner to check ID and firmware(CRF) version.
+        
+        // Stick X is the left joystick up and down
+        // Stick Y is the left joystick left and right
+
+        // Stick Z is the left trigger?
+
+        // This is the line that works with the fancy plane joystick, it drives correctly and turns correctly
+        // robot.move(stick.getZ(), ALTERNATE_ROTATE ? -stick.getY() : stick.getX()); //Wwhat is an HID?
+        
+        // Stick 0 is the left joystick left and right
+        // Stick 1 is the left joystick up and down
+        // Stick 2 is the left trigger
+        // Stick 3 is the right trigger
+        // Stick 4 is the right joystick left and right
+        // Stick 5 is the right joystick up and down
+
+        // THIS LINE WORKS
+        robot.move( ALTERNATE_ROTATE ? gamepad.getRawAxis(4) : gamepad.getRawAxis(0), -gamepad.getRawAxis(1));
     }
 
 }
