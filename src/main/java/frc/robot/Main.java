@@ -30,14 +30,17 @@ public final class Main {
         RobotBase.startRobot(() -> {
             Robot robot = new Robot();
             robot.addComponent(new MovementComponent(robot));
-            robot.addComponent(new ActuatorComponent(robot));
-            robot.addComponent(new CLPComponent(robot));
+            //robot.addComponent(new ActuatorComponent(robot));
+            //robot.addComponent(new CLPComponent(robot));
+            /*
             try {
                 robot.addComponent(InstructionAutonomous.createFromFile("simple instsructions.txt", robot));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+            */
             return robot;
+            
         });
 
     }

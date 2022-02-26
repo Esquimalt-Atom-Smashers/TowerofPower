@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.XboxController;
  */
 public class MovementComponent extends ComponentBase {
 
+    public static final double SPEED_MULT = 0.8;
+    public static final double ROTATE_MULT = 0.8;
+
     /** Controls if we use the second joystick to rotate the robot. */
     private static final boolean ALTERNATE_ROTATE = true;
 
@@ -44,7 +47,7 @@ public class MovementComponent extends ComponentBase {
         // Stick 5 is the right joystick up and down
 
         // THIS LINE WORKS
-        robot.move( ALTERNATE_ROTATE ? gamepad.getRawAxis(4) : gamepad.getRawAxis(0), -gamepad.getRawAxis(1));
+        robot.move( ROTATE_MULT * (ALTERNATE_ROTATE ? gamepad.getRawAxis(4) : gamepad.getRawAxis(0)), SPEED_MULT * -gamepad.getRawAxis(1));
     }
 
 }
