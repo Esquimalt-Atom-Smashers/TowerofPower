@@ -29,7 +29,10 @@ public final class Main {
 
         RobotBase.startRobot(() -> {
             Robot robot = new Robot();
+            robot.initJoystickSlots(0, 4);
+
             robot.addComponent(new MovementComponent(robot));
+
             //robot.addComponent(new ActuatorComponent(robot));
             //robot.addComponent(new CLPComponent(robot));
             /*

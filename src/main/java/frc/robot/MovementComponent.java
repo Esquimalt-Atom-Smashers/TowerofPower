@@ -8,10 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 public class MovementComponent extends ComponentBase {
 
     public static final double SPEED_MULT = 0.8;
-    public static final double ROTATE_MULT = 0.8;
-
-    /** Controls if we use the second joystick to rotate the robot. */
-    private static final boolean ALTERNATE_ROTATE = true;
+    public static final double ROTATE_MULT = 0.65;
 
     /** Creates and initialize the component with the given Robot.
      * @see ComponentBase#ComponentBase(Robot)
@@ -27,27 +24,18 @@ public class MovementComponent extends ComponentBase {
      */
     @Override
     public void teleopPeriodic() {
-        XboxController gamepad = robot.getXboxController();
-        //  -stick.getY() gives an error:
-        //CTR: Firm Vers could not be retrieved. Use Phoenix Tuner to check ID and firmware(CRF) version.
+        XboxController gamepad1 = robot.getXboxController1();
+        XboxController gamepad2 = robot.getXboxController2();
         
-        // Stick X is the left joystick up and down
-        // Stick Y is the left joystick left and right
+        // Axis 0 is the left joystick left and right
+        // Axis 1 is the left joystick up and down
+        // Axis 2 is the left trigger
+        // Axis 3 is the right trigger
+        // Axis 4 is the right joystick left and right
+        // Axis 5 is the right joystick up and down
 
-        // Stick Z is the left trigger?
-
-        // This is the line that works with the fancy plane joystick, it drives correctly and turns correctly
-        // robot.move(stick.getZ(), ALTERNATE_ROTATE ? -stick.getY() : stick.getX()); //Wwhat is an HID?
-        
-        // Stick 0 is the left joystick left and right
-        // Stick 1 is the left joystick up and down
-        // Stick 2 is the left trigger
-        // Stick 3 is the right trigger
-        // Stick 4 is the right joystick left and right
-        // Stick 5 is the right joystick up and down
-
-        // THIS LINE WORKS
-        robot.move( ROTATE_MULT * (ALTERNATE_ROTATE ? gamepad.getRawAxis(4) : gamepad.getRawAxis(0)), SPEED_MULT * -gamepad.getRawAxis(1));
+        // Move the robot based on the inputs of the drive controller
+        robot.move(ROTATE_MULT * gamepad1.getRawAxis(4), SPEED_MULT * -gamepad1.getRawAxis(1));
     }
 
 }

@@ -65,6 +65,10 @@ import frc.robot.servos.Servos;
  */
 public class Robot /* Do not change class name */ extends TimedRobot {
 
+    public Robot() {
+        initJoystickSlots(DEFAULT_JOYSTICK_SLOT_1, DEFAULT_JOYSTICK_SLOT_2);
+    }
+
     public static Robot getWithComponents(ComponentBase... components) {
         Robot robot = new Robot();
         robot.components.addAll(Arrays.asList(components));
@@ -81,7 +85,8 @@ public class Robot /* Do not change class name */ extends TimedRobot {
      * <p> For drive team: Joystick slot is determined here: </p>
      * This variable controls the slot the joystick is created from.
      */
-    private static final int DEFAULT_JOYSTICK_SLOT = 0;
+    private static int DEFAULT_JOYSTICK_SLOT_1 = 0;
+    private static int DEFAULT_JOYSTICK_SLOT_2 = 1;
 
     //The four drivebase motors controlled by the Spark motor controllers (m_frontLeft/m_frontRight and m_rearLeft/m_rearLeft these may not be entirely correct, I'll double check on Tuesday)
     private final MotorController m_frontLeft = new Spark(3);
@@ -99,10 +104,11 @@ public class Robot /* Do not change class name */ extends TimedRobot {
      * For drive team: Joystick slot is determined here:
      * A Joystick pulled from the port specified in {@link Robot#DEFAULT_JOYSTICK_SLOT}.
     **/
-    private final Joystick stick = new Joystick(DEFAULT_JOYSTICK_SLOT); 
+    private Joystick stick; 
 
     /** This just exists for situations where you want to process the {@link Robot#stick} as an XboxController. Will probably be removed in a future version. */
-    private final XboxController xboxController = new XboxController(DEFAULT_JOYSTICK_SLOT);
+    private XboxController xboxController1;
+    private XboxController xboxController2;
 
     /* A list of motor controllers used to control the CLP */
     private final CLPMotors clpMotors = null;//new CLPMotors(1, 2, 6);
@@ -287,6 +293,13 @@ public class Robot /* Do not change class name */ extends TimedRobot {
         components.forEach(ComponentBase::testPeriodic);
     }
 
+    public void initJoystickSlots(int slot1, int slot2) {
+        stick = new Joystick(slot1);
+
+        xboxController1 = new XboxController(slot1);
+        xboxController2 = new XboxController(slot2);
+    }
+
     /**
      * This method is used to add a component to the Robot. The added component will have its methods called by the equivalent methods in Robot.java.
      * @param component - The component you are adding to the robot.
@@ -312,10 +325,17 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     }
 
     /**
-     * @return The xbox controller created from the slot: {@link Robot#DEFAULT_JOYSTICK_SLOT}, will probably be removed in a later version.
+     * @return The xbox controller created from the slot: {@link Robot#DEFAULT_JOYSTICK_SLOT_1}, will probably be removed in a later version.
      */
-    public XboxController getXboxController() {
-        return xboxController;
+    public XboxController getXboxController1() {
+        return xboxController1;
+    }
+
+    /**
+     * @return The xbox controller created from the slot: {@link Robot#DEFAULT_JOYSTICK_SLOT_2}, will probably be removed in a later version.
+     */
+    public XboxController getXboxController2() {
+        return xboxController2;
     }
 
     /**
