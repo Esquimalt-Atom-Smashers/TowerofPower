@@ -19,6 +19,10 @@ import java.util.function.Supplier;
  */
 public final class Main {
 
+    // Set the controller ports here
+    public static final int CONTROLLER_PORT_1 = 0;
+    public static final int CONTROLLER_PORT_2 = 4;
+
     private Main() {
     }
 
@@ -29,7 +33,7 @@ public final class Main {
 
         RobotBase.startRobot(() -> {
             Robot robot = new Robot();
-            robot.initJoystickSlots(0, 4);
+            robot.initJoystickSlots(CONTROLLER_PORT_1, CONTROLLER_PORT_2);
 
             robot.addComponent(new MovementComponent(robot));
 
