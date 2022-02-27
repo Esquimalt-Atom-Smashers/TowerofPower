@@ -11,15 +11,12 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 //import edu.wpi.first.wpilibj.GenericHID.Hand; //This import was breaking things - I have no idea why since it seems to exit
+import edu.wpi.first.wpilibj.motorcontrol.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.clp.CLPMotors;
 import frc.robot.events.*;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.servos.Servos;
 
@@ -118,6 +115,9 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     private final WPI_VictorSPX shooterMotor = null;//new WPI_VictorSPX(1);
     /** A list of servos used to control the linear actuators. */
     private final Servos intakeServos = new Servos(4, 5);
+
+    private final Talon intakeMotor = new Talon(1);
+    private final Talon climberMotor = new Talon(2);
 
     /* ************************* *
      *      Event Variables
@@ -238,6 +238,17 @@ public class Robot /* Do not change class name */ extends TimedRobot {
             }
             if (!executed) {
                 buttonHandlers.forEach(EventHandler::otherwise);
+            }
+        }
+        if (!dpadHandlers.isEmpty()) {
+            boolean execute = stick.getPOV() != -1;
+            DpadEvent event = new DpadEvent(this, getJoystick(), stick.getPOV());
+            for (EventHandler<DpadEvent> eventHandler : dpadHandlers) {
+                if (event.isConsumed() || !execute) {
+                    eventHandler.otherwise();
+                } else {
+                    eventHandler.receive(event);
+                }
             }
         }
 
@@ -481,6 +492,14 @@ public class Robot /* Do not change class name */ extends TimedRobot {
      */
     public void removeDpadHandler(EventHandler<DpadEvent> handler) {
         dpadHandlers.remove(handler);
+    }
+
+    public Talon getIntakeMotor() {
+        return intakeMotor;
+    }
+
+    public Talon getClimberMotor() {
+        return climberMotor;
     }
 
 }

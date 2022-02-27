@@ -38,10 +38,5 @@ public class IntakeExtensionComponent extends ComponentBase {
 
     }
 
-    @Override
-    public void teleopPeriodic() {
-        
-    }
-
     
 }
