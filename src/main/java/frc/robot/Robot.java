@@ -19,7 +19,11 @@ import frc.robot.events.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.servos.Servos;
-
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
+import frc.robot.TowerMotors;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 /**
  * This class contains the following important objects:
@@ -118,6 +122,13 @@ public class Robot /* Do not change class name */ extends TimedRobot {
 
     private final Talon intakeMotor = new Talon(1);
     private final Talon climberMotor = new Talon(2);
+
+        //** A list of motors used in the tower: shooter and tower */
+    private final WPI_VictorSPX towerMotor1 = new WPI_VictorSPX(3); //Assuming the Phoenix tuner ID is the same as the method parameter here, I'm also only making it a WPI_VictorSPX object for now instead of a TowerMotors object
+    private final WPI_VictorSPX towerMotor2 = new WPI_VictorSPX(4); //Same asusmptions as above
+    private final WPI_VictorSPX shooterMotor1 = new WPI_VictorSPX(5); //Same assumptions 
+    private final WPI_VictorSPX shooterMotor2 = new WPI_VictorSPX(6); //Same assumptions    
+
 
     /* ************************* *
      *      Event Variables
@@ -369,6 +380,27 @@ public class Robot /* Do not change class name */ extends TimedRobot {
      */
     public MotorControllerGroup getRightMotor() {
         return rightMotor;
+    }
+
+        /**
+     * 
+     * @return These are the getter methods for the tower motors.
+     */
+     
+    public WPI_VictorSPX getShooterMotor1() {
+        return shooterMotor1;
+    }
+
+    public WPI_VictorSPX getShooterMotor2() {
+        return shooterMotor2;
+    }
+
+    public WPI_VictorSPX getTowerMotor1() {
+        return towerMotor1;
+    }
+
+    public WPI_VictorSPX getTowerMotor2() {
+        return towerMotor2;
     }
 
     /**
