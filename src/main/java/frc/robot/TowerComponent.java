@@ -2,7 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 
-
 public class TowerComponent extends ComponentBase {
     //Asumming 1 is clockwise and -1 is counterclockwise for now - need to make CLOCK WISE and COUNTER CLOCKWISE CONSTANTS
     private static final int SHOOT_HIGH_BUTTON = 0; //Placeholder for now

@@ -17,13 +17,12 @@ public class MovementComponent extends ComponentBase {
     }
 
     /**
-     * Moves the robot based on if the Robot's joystick is being moved. If {@link MovementComponent#ALTERNATE_ROTATE}
-     * is true then both joysticks on the controller are used to move the Robot. Otherwise, just one joystick is used.
+     * Moves the robot based on if the Robot's joystick is being moved. Both joysticks on the controller are used to move the Robot.
      * @see Robot#getJoystick()
      */
     @Override
     public void teleopPeriodic() {
-        XboxController gamepad1 = robot.getXboxController1();
+        XboxController gamepad = robot.getXboxController2();
         
         // Axis 0 is the left joystick left and right
         // Axis 1 is the left joystick up and down
@@ -33,7 +32,7 @@ public class MovementComponent extends ComponentBase {
         // Axis 5 is the right joystick up and down
 
         // Move the robot based on the inputs of the drive controller
-        robot.move(ROTATE_MULT * gamepad1.getRawAxis(4), SPEED_MULT * -gamepad1.getRawAxis(1));
+        robot.move(ROTATE_MULT * gamepad.getRawAxis(4), SPEED_MULT * -gamepad.getRawAxis(1));
     }
 
 }

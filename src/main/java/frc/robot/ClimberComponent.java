@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.XboxController;
+
 public class ClimberComponent extends ComponentBase {
 
     /**
@@ -9,16 +11,22 @@ public class ClimberComponent extends ComponentBase {
      */
     public ClimberComponent(Robot robot) {
         super(robot);
+    }
 
-        robot.addDpadHandler(event -> {
-            if (event.getValue() == 0) {
-                robot.getClimberMotor().set(2);
-            } else if (event.getValue() == 180) {
-                robot.getClimberMotor().set(1);
-            } else {
-                robot.getClimberMotor().set(1.513);
-            }
-        });
+    public void teleopPeriodic() {
+        XboxController gamepad = robot.getXboxController2();
+
+        // This could destroy the motors if used without encoders!
+        
+        /*
+        if (gamepad.getPOV() == 0) {
+            robot.getClimberMotor().set(2);
+        } else if (gamepad.getPOV() == 180) {
+            robot.getClimberMotor().set(1);
+        } else {
+            robot.getClimberMotor().set(1.513);
+        }
+        */
     }
 
 }

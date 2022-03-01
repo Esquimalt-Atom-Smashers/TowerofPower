@@ -12,31 +12,14 @@ public class IntakeExtensionComponent extends ComponentBase {
     public IntakeExtensionComponent(Robot robot) {
         super(robot);
 
-        robot.getIntakeServos().setAngle(30);
+        robot.setOnButtonPressed(1, event -> {
+            robot.getIntakeServos().setAngle(robot.getIntakeServos().getAngle() + MOVE_AMOUNT);
+        });
         
-        robot.setOnDpadMoved(event -> {
-            double eventVal = event.getValue();
-            double angle = robot.getIntakeServos().getAngle();
-
-            if (eventVal == 0) {
-                System.out.println("2");
-
-                if (angle < MAX_ANGLE) {
-                    System.out.println(robot.getIntakeServos());
-                    robot.getIntakeServos().setAngle(robot.getIntakeServos().getAngle() + MOVE_AMOUNT);
-                }
-
-            } else if (eventVal == 180 && angle > MIN_ANGLE) {
-
-                System.out.println("2" + robot.getIntakeServos());
-                robot.getIntakeServos().setAngle(robot.getIntakeServos().getAngle() - MOVE_AMOUNT);
-
-            } else {
-                System.out.println("1: " + eventVal);
-            }
+        robot.setOnButtonPressed(2, event -> {
+            robot.getIntakeServos().setAngle(robot.getIntakeServos().getAngle() - MOVE_AMOUNT);
         });
 
     }
-
     
 }

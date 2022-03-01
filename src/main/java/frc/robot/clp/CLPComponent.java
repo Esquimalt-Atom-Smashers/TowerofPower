@@ -8,6 +8,7 @@ public class CLPComponent extends ComponentBase {
 
     public CLPComponent(Robot robot) {
         super(robot);
+        /*
         // Button 8 is right trigger
         robot.setOnButtonPressed(8, EventHandler.combineAndCreate(event -> {
             robot.getClpMotors().set(-1);
@@ -29,6 +30,7 @@ public class CLPComponent extends ComponentBase {
             robot.getIntakeMotor1().set(1);
             robot.getIntakeMotor2().set(-1);
         });
+        */
     }
-    
+
 }
