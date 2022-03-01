@@ -9,6 +9,13 @@
       "name": "Launch Main",
       "request": "launch",
       "mainClass": "frc.robot.Main",
+      "projectName": "TowerofPower"
+    },
+    {
+      "type": "java",
+      "name": "Launch Main",
+      "request": "launch",
+      "mainClass": "frc.robot.Main",
       "projectName": "TowerofPower-Imported"
     },
     {

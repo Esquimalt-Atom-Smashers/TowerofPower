@@ -10,7 +10,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
-//import edu.wpi.first.wpilibj.GenericHID.Hand; //This import was breaking things - I have no idea why since it seems to exit
 import edu.wpi.first.wpilibj.motorcontrol.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -101,7 +100,7 @@ public class Robot /* Do not change class name */ extends TimedRobot {
 
     /** 
      * For drive team: Joystick slot is determined here:
-     * A Joystick pulled from the port specified in {@link Robot#DEFAULT_JOYSTICK_SLOT}.
+     * A Joystick pulled from the port specified in {@link Robot#DEFAULT_JOYSTICK_SLOT_1}.
     **/
     private Joystick stick; 
 

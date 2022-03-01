@@ -24,7 +24,6 @@ public class MovementComponent extends ComponentBase {
     @Override
     public void teleopPeriodic() {
         XboxController gamepad1 = robot.getXboxController1();
-        XboxController gamepad2 = robot.getXboxController2();
         
         // Axis 0 is the left joystick left and right
         // Axis 1 is the left joystick up and down
