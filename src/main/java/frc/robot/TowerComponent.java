@@ -1,9 +1,5 @@
 package frc.robot;
 
-import frc.robot.ComponentBase;
-import frc.robot.Robot;
-import frc.robot.Main;
-import frc.robot.events.EventHandler;
 import edu.wpi.first.wpilibj.XboxController;
 
 

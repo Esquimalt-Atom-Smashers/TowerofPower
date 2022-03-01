@@ -1,13 +1,13 @@
 package frc.robot;
 
-public class Climber extends ComponentBase {
+public class ClimberComponent extends ComponentBase {
 
     /**
      * Generates a new component and initializes it with a Robot.
      *
      * @param robot The robot which this component will be attached to.
      */
-    public Climber(Robot robot) {
+    public ClimberComponent(Robot robot) {
         super(robot);
 
         robot.addDpadHandler(event -> {

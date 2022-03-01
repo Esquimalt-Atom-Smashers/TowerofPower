@@ -21,8 +21,6 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.servos.Servos;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
-import frc.robot.TowerMotors;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 /**

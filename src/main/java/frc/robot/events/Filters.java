@@ -1,6 +1,5 @@
 package frc.robot.events;
 
-import frc.robot.Robot;
 
 import java.util.function.Predicate;
 

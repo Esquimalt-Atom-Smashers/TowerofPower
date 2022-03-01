@@ -160,3 +160,6 @@ bin/
 
 # Simulation GUI and other tools window save file
 *-window.json
+
+# By Arlo: launch.json was automatically modified by WPILib
+.vscode/launch.json

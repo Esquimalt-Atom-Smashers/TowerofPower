@@ -2,14 +2,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 
-public class Intake extends ComponentBase {
+public class IntakeComponent extends ComponentBase {
 
     /**
      * Generates a new component and initializes it with a Robot.
      *
      * @param robot The robot which this component will be attached to.
      */
-    public Intake(Robot robot) {
+    public IntakeComponent(Robot robot) {
         super(robot);
     }
 

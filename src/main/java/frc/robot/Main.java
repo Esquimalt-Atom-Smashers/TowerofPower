@@ -5,12 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.RobotBase;
-import frc.robot.autonomous.pattern.InstructionAutonomous;
-import frc.robot.clp.CLPComponent;
 import frc.robot.servos.IntakeExtensionComponent;
-
-import java.io.FileNotFoundException;
-import java.util.function.Supplier;
 
 /**
  * WPILib doesn't want you to add stuff to here, that's because they do many
