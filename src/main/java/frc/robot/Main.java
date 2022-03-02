@@ -32,9 +32,9 @@ public final class Main {
 
             robot.addComponent(new MovementComponent(robot));
 
-            robot.addComponent(new IntakeExtensionComponent(robot));
+            robot.addComponent(new ClimberComponent(robot));
 
-            robot.addComponent(new TowerComponent(robot));
+            // robot.addComponent(new TowerComponent(robot));
             //robot.addComponent(new ActuatorComponent(robot));
             //robot.addComponent(new CLPComponent(robot));
             /*
