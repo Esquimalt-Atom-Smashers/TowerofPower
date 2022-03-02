@@ -85,6 +85,8 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     private static int DEFAULT_JOYSTICK_SLOT_1 = 0;
     private static int DEFAULT_JOYSTICK_SLOT_2 = 1;
 
+    private static ArrayList<Double> actions = new ArrayList<>();
+
     //The four drivebase motors controlled by the Spark motor controllers (m_frontLeft/m_frontRight and m_rearLeft/m_rearLeft these may not be entirely correct, I'll double check on Tuesday)
     private final MotorController m_frontLeft = new Spark(3);
     private final MotorController m_rearLeft = new Spark(2);
