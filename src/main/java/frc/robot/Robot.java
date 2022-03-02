@@ -8,14 +8,12 @@ import java.util.*;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.motorcontrol.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.clp.CLPMotors;
 import frc.robot.events.*;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.servos.Servos;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
@@ -65,6 +63,7 @@ public class Robot /* Do not change class name */ extends TimedRobot {
 
     public Robot() {
         initJoystickSlots(DEFAULT_JOYSTICK_SLOT_1, DEFAULT_JOYSTICK_SLOT_2);
+        climberEncoder.setDistancePerRotation(2 * Math.PI);
     }
 
     public static Robot getWithComponents(ComponentBase... components) {
@@ -109,14 +108,15 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     private XboxController xboxController2;
 
     /** A list of servos used to control the linear actuators. */
-    private final Servos intakeServos = new Servos(4, 5);
+    private final Servo intakeServo = new Servo(4);
 
     private final Talon intakeMotor = new Talon(1);
     private final Talon climberMotor = new Talon(2);
+    private final DutyCycleEncoder climberEncoder = new DutyCycleEncoder(5);
 
         //** A list of motors used in the tower: shooter and tower */
     private final WPI_VictorSPX towerMotor1 = new WPI_VictorSPX(3); //Assuming the Phoenix tuner ID is the same as the method parameter here, I'm also only making it a WPI_VictorSPX object for now instead of a TowerMotors object
-    private final WPI_VictorSPX towerMotor2 = new WPI_VictorSPX(4); //Same asusmptions as above
+    private final WPI_VictorSPX towerMotor2 = new WPI_VictorSPX(4); //Same assumptions as above
     private final WPI_VictorSPX shooterMotor1 = new WPI_VictorSPX(5); //Same assumptions 
     private final WPI_VictorSPX shooterMotor2 = new WPI_VictorSPX(6); //Same assumptions    
 
@@ -398,8 +398,8 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     /**
      * @return The robot's servos. These servos are used to control the linear actuators that move the CLP up and down. The returned object's class contains a list of servos as well as some convenience methods for running actions on all the servos in its list.
      */
-    public Servos getIntakeServos() {
-        return intakeServos;
+    public Servo getIntakeServo() {
+        return intakeServo;
     }
 
     /**
@@ -502,4 +502,7 @@ public class Robot /* Do not change class name */ extends TimedRobot {
         return climberMotor;
     }
 
+    public DutyCycleEncoder getClimberEncoder() {
+        return climberEncoder;
+    }
 }

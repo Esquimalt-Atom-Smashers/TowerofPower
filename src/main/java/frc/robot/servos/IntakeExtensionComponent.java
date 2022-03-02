@@ -5,19 +5,20 @@ import frc.robot.Robot;
 
 public class IntakeExtensionComponent extends ComponentBase {
 
-    private static final double MAX_ANGLE = 145;
-    private static final double MIN_ANGLE = 30;
-    private static final double MOVE_AMOUNT = 0.2;
+    private static final double OPEN_ANGLE = 90;
+    private static final double CLOSED_ANGLE = 0;
 
     public IntakeExtensionComponent(Robot robot) {
         super(robot);
 
+        robot.getIntakeServo().setAngle(OPEN_ANGLE);
+
         robot.setOnButtonPressed(1, event -> {
-            robot.getIntakeServos().setAngle(robot.getIntakeServos().getAngle() + MOVE_AMOUNT);
+            robot.getIntakeServo().setAngle(OPEN_ANGLE);
         });
         
         robot.setOnButtonPressed(2, event -> {
-            robot.getIntakeServos().setAngle(robot.getIntakeServos().getAngle() - MOVE_AMOUNT);
+            robot.getIntakeServo().setAngle(CLOSED_ANGLE);
         });
 
     }

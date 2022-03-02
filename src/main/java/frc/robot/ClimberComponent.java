@@ -1,8 +1,12 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class ClimberComponent extends ComponentBase {
+
+    public static final double MIN_POSITION = 0;
+    public static final double MAX_POSITION = 30;
 
     /**
      * Generates a new component and initializes it with a Robot.
@@ -16,17 +20,13 @@ public class ClimberComponent extends ComponentBase {
     public void teleopPeriodic() {
         XboxController gamepad = robot.getXboxController2();
 
-        // This could destroy the motors if used without encoders!
-        
-        /*
-        if (gamepad.getPOV() == 0) {
+        if (gamepad.getPOV() == 0 && robot.getClimberEncoder().getDistance() < MAX_POSITION) {
             robot.getClimberMotor().set(2);
-        } else if (gamepad.getPOV() == 180) {
+        } else if (gamepad.getPOV() == 180 && robot.getClimberEncoder().getDistance() > MIN_POSITION) {
             robot.getClimberMotor().set(1);
         } else {
             robot.getClimberMotor().set(1.513);
         }
-        */
     }
 
 }
