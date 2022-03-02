@@ -6,10 +6,11 @@ package frc.robot;
 
 import java.util.*;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.motorcontrol.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.clp.CLPMotors;
@@ -83,7 +84,7 @@ public class Robot /* Do not change class name */ extends TimedRobot {
      * This variable controls the slot the joystick is created from.
      */
     private static int DEFAULT_JOYSTICK_SLOT_1 = 0;
-    private static int DEFAULT_JOYSTICK_SLOT_2 = 1;
+    private static int DEFAULT_JOYSTICK_SLOT_2 = 4;
 
     //The four drivebase motors controlled by the Spark motor controllers (m_frontLeft/m_frontRight and m_rearLeft/m_rearLeft these may not be entirely correct, I'll double check on Tuesday)
     private final MotorController m_frontLeft = new Spark(3);
@@ -110,15 +111,15 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     /** A list of servos used to control the linear actuators. */
     private final Servo intakeServo = new Servo(4);
 
-    private final Talon intakeMotor = new Talon(1);
-    private final Talon climberMotor = new Talon(2);
+    private final WPI_TalonSRX intakeMotor = new WPI_TalonSRX(1);
+    private final WPI_TalonSRX climberMotor = new WPI_TalonSRX(2);
     private final DutyCycleEncoder climberEncoder = new DutyCycleEncoder(5);
 
         //** A list of motors used in the tower: shooter and tower */
-    private final WPI_VictorSPX towerMotor1 = new WPI_VictorSPX(3); //Assuming the Phoenix tuner ID is the same as the method parameter here, I'm also only making it a WPI_VictorSPX object for now instead of a TowerMotors object
-    private final WPI_VictorSPX towerMotor2 = new WPI_VictorSPX(4); //Same assumptions as above
-    private final WPI_VictorSPX shooterMotor1 = new WPI_VictorSPX(5); //Same assumptions 
-    private final WPI_VictorSPX shooterMotor2 = new WPI_VictorSPX(6); //Same assumptions    
+    private final WPI_VictorSPX towerMotor1 = /* new WPI_VictorSPX(3) */ null; //Assuming the Phoenix tuner ID is the same as the method parameter here, I'm also only making it a WPI_VictorSPX object for now instead of a TowerMotors object
+    private final WPI_VictorSPX towerMotor2 = /* new WPI_VictorSPX(4) */ null; //Same assumptions as above
+    private final WPI_VictorSPX shooterMotor1 = /* new WPI_VictorSPX(5) */ null; //Same assumptions 
+    private final WPI_VictorSPX shooterMotor2 = /* new WPI_VictorSPX(6) */ null; //Same assumptions    
 
 
     /* ************************* *
@@ -140,7 +141,7 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     /** The list of components which the robot delegates work to, see: {@link Robot}, {@link Robot#addComponent(ComponentBase)} and {@link ComponentBase} */
     private final ArrayList<ComponentBase> components = new ArrayList<>();
 
-    private boolean disabled = true;
+    private boolean disabled = true; 
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -151,6 +152,7 @@ public class Robot /* Do not change class name */ extends TimedRobot {
         m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
         m_chooser.addOption("My Auto", kCustomAuto);
         SmartDashboard.putData("Auto choices", m_chooser);
+        climberMotor.setNeutralMode(NeutralMode.Brake);
     }
 
     /**
@@ -494,11 +496,11 @@ public class Robot /* Do not change class name */ extends TimedRobot {
         dpadHandlers.remove(handler);
     }
 
-    public Talon getIntakeMotor() {
+    public WPI_TalonSRX getIntakeMotor() {
         return intakeMotor;
     }
 
-    public Talon getClimberMotor() {
+    public WPI_TalonSRX getClimberMotor() {
         return climberMotor;
     }
 

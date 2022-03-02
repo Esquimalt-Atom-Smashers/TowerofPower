@@ -32,7 +32,7 @@ public class MovementComponent extends ComponentBase {
         // Axis 5 is the right joystick up and down
 
         // Move the robot based on the inputs of the drive controller
-        robot.move(ROTATE_MULT * gamepad.getRawAxis(4), SPEED_MULT * -gamepad.getRawAxis(1));
+        robot.move(ROTATE_MULT * gamepad.getRawAxis(2), SPEED_MULT * -gamepad.getRawAxis(1));
     }
 
 }
