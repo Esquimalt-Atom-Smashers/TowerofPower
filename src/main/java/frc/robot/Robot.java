@@ -13,6 +13,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.autonomous.Action;
+import frc.robot.autonomous.AutonomousFrame;
+import frc.robot.autonomous.MoveAction;
 import frc.robot.clp.CLPMotors;
 import frc.robot.events.*;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -143,7 +146,13 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     /** The list of components which the robot delegates work to, see: {@link Robot}, {@link Robot#addComponent(ComponentBase)} and {@link ComponentBase} */
     private final ArrayList<ComponentBase> components = new ArrayList<>();
 
-    private boolean disabled = true; 
+    private boolean disabled = true;
+
+    // Autonomous variables
+    private boolean recording;
+    private boolean playingBack;
+    private final List<AutonomousFrame> frames = new ArrayList<>();
+    private AutonomousFrame currentFrame;
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -221,6 +230,8 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     @Override
     public void teleopPeriodic() {
 
+        currentFrame = new AutonomousFrame();
+
         // This loop is used to run the teleopPeriodic method in the ComponentBases
         // stored in the components.
         components.forEach(ComponentBase::teleopPeriodic);
@@ -283,6 +294,12 @@ public class Robot /* Do not change class name */ extends TimedRobot {
             }
         }
 
+        if (!frames.isEmpty() && frames.get(frames.size() - 1).equals(currentFrame)) {
+            frames.get(frames.size() - 1).incrementRunTimes();
+        } else {
+            frames.add(currentFrame);
+        }
+
     }
 
     /** This function is called once when the robot is disabled. */
@@ -332,6 +349,15 @@ public class Robot /* Do not change class name */ extends TimedRobot {
      */
     public void move(double moveAmount, double rotation) {
         robotDrive.arcadeDrive(moveAmount, rotation);
+        if (recording) {
+            addAction(new MoveAction(moveAmount, rotation));
+        }
+    }
+
+    public void addAction(Action action) {
+        if (currentFrame != null) {
+            currentFrame.addAction(action);
+        }
     }
 
     /**
@@ -508,5 +534,13 @@ public class Robot /* Do not change class name */ extends TimedRobot {
 
     public DutyCycleEncoder getClimberEncoder() {
         return climberEncoder;
+    }
+
+    public boolean isRecording() {
+        return recording;
+    }
+
+    public boolean isPlayingBack() {
+        return playingBack;
     }
 }
