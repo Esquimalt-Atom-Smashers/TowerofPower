@@ -12,4 +12,9 @@ public class DelayAction extends Action {
     public void run(Robot robot) {
         
     }
+
+    @Override
+    protected double[] getValues() {
+        return new double[0];
+    }
 }

@@ -25,4 +25,9 @@ public class MoveAction extends Action {
     public void run(Robot robot) {
         robot.move(rotate, move);
     }
+
+    @Override
+    protected double[] getValues() {
+        return new double[]{move, rotate};
+    }
 }
