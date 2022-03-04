@@ -9,7 +9,7 @@ public class ClimberComponent extends ComponentBase {
     public static final double MIN_POSITION = 0;
     public static final double MAX_POSITION = 15;
 
-    private static final boolean USE_BREAK_MODE = true;
+    private static final boolean USE_BREAK_MODE = false;
 
     /**
      * Generates a new component and initializes it with a Robot.
@@ -18,6 +18,8 @@ public class ClimberComponent extends ComponentBase {
      */
     public ClimberComponent(Robot robot) {
         super(robot);
+
+        //robot.getClimberEncoder().reset();
 
         if (USE_BREAK_MODE) {
             robot.getClimberMotor().setNeutralMode(NeutralMode.Brake);
@@ -29,11 +31,14 @@ public class ClimberComponent extends ComponentBase {
     public void teleopPeriodic() {
         XboxController gamepad = robot.getXboxController2();
 
-        // System.out.println(robot.getClimberEncoder().getDistance());
-        if (gamepad.getPOV() == 0 && robot.getClimberEncoder().getDistance() < MAX_POSITION) {
-            robot.getClimberMotor().set(-0.6);
-        } else if (gamepad.getPOV() == 180) {
-            robot.getClimberMotor().set(0.6);
+        System.out.println(robot.getClimberEncoder().getDistance());
+        System.out.println(robot.getClimberEncoder().isConnected());
+        System.out.println(robot.getClimberEncoder().get());
+
+        if (gamepad.getPOV() == 0 /*&& robot.getClimberEncoder().getDistance() < MAX_POSITION */) {
+            robot.getClimberMotor().set(-0.1);//was .6
+        } else if (gamepad.getPOV() == 180 /*&& robot.getClimberEncoder().getDistance() > MIN_POSITION*/) {
+            robot.getClimberMotor().set(0.1);
         } else {
             robot.getClimberMotor().set(0);
         }

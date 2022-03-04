@@ -116,10 +116,10 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     private final DutyCycleEncoder climberEncoder = new DutyCycleEncoder(5);
 
         //** A list of motors used in the tower: shooter and tower */
-    private final WPI_VictorSPX towerMotor1 = /* new WPI_VictorSPX(3) */ null; //Assuming the Phoenix tuner ID is the same as the method parameter here, I'm also only making it a WPI_VictorSPX object for now instead of a TowerMotors object
-    private final WPI_VictorSPX towerMotor2 = /* new WPI_VictorSPX(4) */ null; //Same assumptions as above
-    private final WPI_VictorSPX shooterMotor1 = /* new WPI_VictorSPX(5) */ null; //Same assumptions 
-    private final WPI_VictorSPX shooterMotor2 = /* new WPI_VictorSPX(6) */ null; //Same assumptions    
+    private final WPI_VictorSPX towerMotor1 = new WPI_VictorSPX(3); //null; //Assuming the Phoenix tuner ID is the same as the method parameter here, I'm also only making it a WPI_VictorSPX object for now instead of a TowerMotors object
+    private final WPI_VictorSPX towerMotor2 = new WPI_VictorSPX(4); //null; //Same assumptions as above
+    private final WPI_VictorSPX shooterMotor1 = new WPI_VictorSPX(5); //null; //Same assumptions 
+    private final WPI_VictorSPX shooterMotor2 = new WPI_VictorSPX(6);// null; //Same assumptions    
 
 
     /* ************************* *

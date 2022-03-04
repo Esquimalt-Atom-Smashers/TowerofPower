@@ -16,10 +16,9 @@ public class IntakeComponent extends ComponentBase {
     @Override
     public void teleopPeriodic() {
         XboxController gamepad = robot.getXboxController1();
+        robot.getIntakeMotor().set(-0.6 * gamepad.getRightTriggerAxis());
 
-        robot.getIntakeMotor().set(gamepad.getRightTriggerAxis());
-
-        if (gamepad.getRightBumper()) robot.getIntakeMotor().set(-1);
+        if (gamepad.getRightBumper()) robot.getIntakeMotor().set(0);
     }
 
 }
