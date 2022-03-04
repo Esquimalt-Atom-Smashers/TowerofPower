@@ -5,6 +5,7 @@ import frc.robot.Robot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class AutonomousFrame {
@@ -54,6 +55,19 @@ public class AutonomousFrame {
 
     public void run(Robot robot) {
         actions.forEach(action -> action.run(robot));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AutonomousFrame frame = (AutonomousFrame) o;
+        return runTimes == frame.runTimes && Objects.equals(actions, frame.actions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(runTimes, actions);
     }
 
     public static AutonomousFrame fromString(String[] lines) {

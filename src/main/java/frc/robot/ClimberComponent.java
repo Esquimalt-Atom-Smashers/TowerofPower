@@ -3,6 +3,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.autonomous.ClimberAction;
 
 public class ClimberComponent extends ComponentBase {
 
@@ -30,12 +31,18 @@ public class ClimberComponent extends ComponentBase {
         XboxController gamepad = robot.getXboxController2();
 
         // System.out.println(robot.getClimberEncoder().getDistance());
+        double motorPower = 0;
         if (gamepad.getPOV() == 0 && robot.getClimberEncoder().getDistance() < MAX_POSITION) {
             robot.getClimberMotor().set(-0.6);
+            motorPower = -0.6;
         } else if (gamepad.getPOV() == 180) {
             robot.getClimberMotor().set(0.6);
+            motorPower = 0.6;
         } else {
             robot.getClimberMotor().set(0);
+        }
+        if (robot.isRecording()) {
+            robot.addAction(new ClimberAction(motorPower));
         }
     }
 

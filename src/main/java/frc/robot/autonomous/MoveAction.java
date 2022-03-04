@@ -2,6 +2,8 @@ package frc.robot.autonomous;
 
 import frc.robot.Robot;
 
+import java.util.Objects;
+
 public class MoveAction extends Action {
 
     private final double move;
@@ -29,5 +31,18 @@ public class MoveAction extends Action {
     @Override
     protected double[] getValues() {
         return new double[]{move, rotate};
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MoveAction that = (MoveAction) o;
+        return Double.compare(that.move, move) == 0 && Double.compare(that.rotate, rotate) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(move, rotate);
     }
 }

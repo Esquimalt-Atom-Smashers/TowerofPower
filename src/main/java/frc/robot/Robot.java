@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import java.io.*;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -149,8 +153,7 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     private boolean disabled = true;
 
     // Autonomous variables
-    private boolean recording;
-    private boolean playingBack;
+    private boolean recording = false;
     private final List<AutonomousFrame> frames = new ArrayList<>();
     private AutonomousFrame currentFrame;
 
@@ -203,20 +206,29 @@ public class Robot /* Do not change class name */ extends TimedRobot {
         // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
         System.out.println("Auto selected: " + m_autoSelected);
         components.forEach(ComponentBase::autonomousInit);
+
+        try {
+            frames.addAll(AutonomousFrame.readFile(new String(
+                    Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource("auto_commands.txt").toURI()))
+            )));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {
         components.forEach(ComponentBase::autonomousPeriodic);
-        switch (m_autoSelected) {
-            case kCustomAuto:
-                // Put custom auto code here
-                break;
-            case kDefaultAuto:
-            default:
-                // Put default auto code here
-                break;
+        runNextFrame();
+    }
+
+    private void runNextFrame() {
+        if (!frames.isEmpty()) {
+            AutonomousFrame nextFrame = frames.get(0);
+            nextFrame.run(this);
+            nextFrame.decrementRunTimes();
+            if (nextFrame.getRunTimes() == 0) frames.remove(0);
         }
     }
 
@@ -229,6 +241,19 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
+
+        if (xboxController1.getStartButtonReleased() || xboxController2.getStartButtonReleased()) {
+            recording = !recording;
+            if (!recording) {
+                try {
+                    new PrintWriter(this.getClass().getResource("auto_commands.txt").getPath()).write(AutonomousFrame.framesToSaveString(frames));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                frames.clear();
+            }
+        }
 
         currentFrame = new AutonomousFrame();
 
@@ -538,9 +563,5 @@ public class Robot /* Do not change class name */ extends TimedRobot {
 
     public boolean isRecording() {
         return recording;
-    }
-
-    public boolean isPlayingBack() {
-        return playingBack;
     }
 }

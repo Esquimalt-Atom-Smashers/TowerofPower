@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.autonomous.IntakeAction;
 
 public class IntakeComponent extends ComponentBase {
 
@@ -17,9 +18,12 @@ public class IntakeComponent extends ComponentBase {
     public void teleopPeriodic() {
         XboxController gamepad = robot.getXboxController1();
 
-        robot.getIntakeMotor().set(gamepad.getRightTriggerAxis());
+        double motorPower = gamepad.getRightBumper() ? -1 : gamepad.getRightTriggerAxis();
+        robot.getIntakeMotor().set(motorPower);
 
-        if (gamepad.getRightBumper()) robot.getIntakeMotor().set(-1);
+        if (robot.isRecording()) {
+            robot.addAction(new IntakeAction(motorPower));
+        }
     }
 
 }
