@@ -13,6 +13,13 @@ public class ClimberAction extends Action {
         this.extension = extension;
     }
 
+    @Override
+    public String toString() {
+        return "ClimberAction{" +
+                "extension=" + extension +
+                '}';
+    }
+
     public double getExtension() {
         return extension;
     }

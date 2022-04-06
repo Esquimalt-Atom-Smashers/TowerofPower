@@ -70,6 +70,14 @@ public class AutonomousFrame {
         return Objects.hash(runTimes, actions);
     }
 
+    @Override
+    public String toString() {
+        return "AutonomousFrame{" +
+                "runTimes=" + runTimes +
+                ", actions=" + actions +
+                '}';
+    }
+
     public static AutonomousFrame fromString(String[] lines) {
         String header = lines[0];
 
@@ -84,27 +92,30 @@ public class AutonomousFrame {
 
     public static List<AutonomousFrame> readFile(String fileText) {
         List<AutonomousFrame> frames = new ArrayList<>();
-        String[] lines = fileText.split("[\n\r]");
+        String[] lines = fileText.lines().toArray(String[]::new);
+
+        System.out.println(Arrays.toString(lines));
 
         int lastFrameEnd = -1;
         for (int i = 0; i < lines.length; i++) {
             if (lines[i].endsWith(":")) {
-                if (lastFrameEnd != i) {
-                    frames.add(AutonomousFrame.fromString(Arrays.copyOfRange(lines, lastFrameEnd, i - 1)));
+                if (lastFrameEnd != i && lastFrameEnd != -1) {
+                    System.out.println("Line i: " + lines[i]);
+                    frames.add(AutonomousFrame.fromString(Arrays.copyOfRange(lines, lastFrameEnd, i)));
                 }
                 lastFrameEnd = i;
             }
         }
 
         if (lastFrameEnd != lines.length - 1 && lastFrameEnd != -1) {
-            frames.add(AutonomousFrame.fromString(Arrays.copyOfRange(lines, lastFrameEnd, lines.length - 1)));
+            frames.add(AutonomousFrame.fromString(Arrays.copyOfRange(lines, lastFrameEnd, lines.length)));
         }
 
         return frames;
     }
 
     public static String framesToSaveString(List<AutonomousFrame> frames) {
-        return frames.stream().map(AutonomousFrame::toSaveString).collect(Collectors.joining("\n"));
+        return frames.stream().map(AutonomousFrame::toSaveString).collect(Collectors.joining(""));
     }
 
 }

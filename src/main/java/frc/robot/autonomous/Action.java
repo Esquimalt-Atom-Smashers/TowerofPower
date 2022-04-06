@@ -47,6 +47,9 @@ public abstract class Action {
             case 'C':
                 action = new ClimberAction(values[0]);
                 break;
+            case 'T':
+                action = new TowerAction(values[0], values[1]);
+                break;
             default: return null;
         }
 
@@ -54,7 +57,7 @@ public abstract class Action {
     }
 
     public enum Type {
-        MOVE, DELAY, INTAKE, CLIMBER;
+        MOVE, TOWER, INTAKE, CLIMBER;
     }
 
 }

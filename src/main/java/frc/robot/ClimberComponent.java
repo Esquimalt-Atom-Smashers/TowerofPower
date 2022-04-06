@@ -10,7 +10,7 @@ public class ClimberComponent extends ComponentBase {
     public static final double MIN_POSITION = 0;
     public static final double MAX_POSITION = 15;
 
-    private static final boolean USE_BREAK_MODE = true;
+    private static final boolean USE_BREAK_MODE = false;
 
     /**
      * Generates a new component and initializes it with a Robot.
@@ -30,9 +30,8 @@ public class ClimberComponent extends ComponentBase {
     public void teleopPeriodic() {
         XboxController gamepad = robot.getXboxController2();
 
-        // System.out.println(robot.getClimberEncoder().getDistance());
         double motorPower = 0;
-        if (gamepad.getPOV() == 0 && robot.getClimberEncoder().getDistance() < MAX_POSITION) {
+        if (gamepad.getPOV() == 0) {
             robot.getClimberMotor().set(-0.6);
             motorPower = -0.6;
         } else if (gamepad.getPOV() == 180) {

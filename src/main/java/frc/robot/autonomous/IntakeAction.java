@@ -5,12 +5,20 @@ import frc.robot.Robot;
 import java.util.Objects;
 
 public class IntakeAction extends Action {
+
     private final double power;
 
     public IntakeAction(double power) {
         super(Type.INTAKE);
 
         this.power = power;
+    }
+
+    @Override
+    public String toString() {
+        return "IntakeAction{" +
+                "power=" + power +
+                '}';
     }
 
     @Override

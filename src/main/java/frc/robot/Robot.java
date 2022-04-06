@@ -125,10 +125,10 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     private final DutyCycleEncoder climberEncoder = new DutyCycleEncoder(5);
 
         //** A list of motors used in the tower: shooter and tower */
-    private final WPI_VictorSPX towerMotor1 = /* new WPI_VictorSPX(3) */ null; //Assuming the Phoenix tuner ID is the same as the method parameter here, I'm also only making it a WPI_VictorSPX object for now instead of a TowerMotors object
-    private final WPI_VictorSPX towerMotor2 = /* new WPI_VictorSPX(4) */ null; //Same assumptions as above
-    private final WPI_VictorSPX shooterMotor1 = /* new WPI_VictorSPX(5) */ null; //Same assumptions 
-    private final WPI_VictorSPX shooterMotor2 = /* new WPI_VictorSPX(6) */ null; //Same assumptions    
+    private final WPI_VictorSPX towerMotor1 = new WPI_VictorSPX(3); //Assuming the Phoenix tuner ID is the same as the method parameter here, I'm also only making it a WPI_VictorSPX object for now instead of a TowerMotors object
+    private final WPI_VictorSPX towerMotor2 =  new WPI_VictorSPX(4) ; //Same assumptions as above
+    private final WPI_VictorSPX shooterMotor1 = new WPI_VictorSPX(5); //Same assumptions
+    private final WPI_VictorSPX shooterMotor2 = new WPI_VictorSPX(6); //Same assumptions
 
 
     /* ************************* *
@@ -208,10 +208,19 @@ public class Robot /* Do not change class name */ extends TimedRobot {
         components.forEach(ComponentBase::autonomousInit);
 
         try {
-            frames.addAll(AutonomousFrame.readFile(new String(
-                    Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource("auto_commands.txt").toURI()))
-            )));
-        } catch (IOException | URISyntaxException e) {
+            File file = new File(Filesystem.getDeployDirectory().getPath() + "/auto_commands.txt"); 
+            Scanner scanner = new Scanner(file);
+            StringBuilder text = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                text.append("\n").append(scanner.nextLine());
+            }
+            frames.addAll(AutonomousFrame.readFile(
+                    text.toString()
+            ));
+            // System.out.println("Frames: " + frames);
+            // System.out.println("Text: " + text);
+            scanner.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -224,11 +233,14 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     }
 
     private void runNextFrame() {
+        // System.out.println("Running frame, frames: " + frames);
         if (!frames.isEmpty()) {
             AutonomousFrame nextFrame = frames.get(0);
             nextFrame.run(this);
             nextFrame.decrementRunTimes();
             if (nextFrame.getRunTimes() == 0) frames.remove(0);
+        } else {
+            move(0, 0);
         }
     }
 
@@ -242,16 +254,14 @@ public class Robot /* Do not change class name */ extends TimedRobot {
     @Override
     public void teleopPeriodic() {
 
-        if (xboxController1.getStartButtonReleased() || xboxController2.getStartButtonReleased()) {
+        if (false) {
             recording = !recording;
             if (!recording) {
-                try {
-                    new PrintWriter(this.getClass().getResource("auto_commands.txt").getPath()).write(AutonomousFrame.framesToSaveString(frames));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                System.out.println(
+                        AutonomousFrame.framesToSaveString(frames)
+                );
             } else {
-                frames.clear();
+                // frames.clear();
             }
         }
 

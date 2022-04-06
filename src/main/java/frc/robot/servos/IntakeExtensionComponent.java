@@ -11,8 +11,6 @@ public class IntakeExtensionComponent extends ComponentBase {
     public IntakeExtensionComponent(Robot robot) {
         super(robot);
 
-        robot.getIntakeServo().setAngle(OPEN_ANGLE);
-
         robot.setOnButtonPressed(1, event -> {
             robot.getIntakeServo().setAngle(OPEN_ANGLE);
         });
@@ -22,5 +20,15 @@ public class IntakeExtensionComponent extends ComponentBase {
         });
 
     }
-    
+
+    @Override
+    public void teleopInit() {
+        robot.getIntakeServo().setAngle(OPEN_ANGLE);
+    }
+
+    @Override
+    public void autonomousInit() {
+        robot.getIntakeServo().setAngle(OPEN_ANGLE);
+
+    }
 }

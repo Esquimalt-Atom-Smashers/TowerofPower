@@ -34,16 +34,12 @@ public final class Main {
 
             robot.addComponent(new ClimberComponent(robot));
 
-            // robot.addComponent(new TowerComponent(robot));
-            //robot.addComponent(new ActuatorComponent(robot));
-            //robot.addComponent(new CLPComponent(robot));
-            /*
-            try {
-                robot.addComponent(InstructionAutonomous.createFromFile("simple instsructions.txt", robot));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            */
+            robot.addComponent(new IntakeExtensionComponent(robot));
+
+            robot.addComponent(new IntakeComponent(robot));
+
+            robot.addComponent(new TowerComponent(robot));
+
             return robot;
             
         });

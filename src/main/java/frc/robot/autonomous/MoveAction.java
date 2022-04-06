@@ -24,6 +24,14 @@ public class MoveAction extends Action {
     }
 
     @Override
+    public String toString() {
+        return "MoveAction{" +
+                "move=" + move +
+                ", rotate=" + rotate +
+                '}';
+    }
+
+    @Override
     public void run(Robot robot) {
         robot.move(rotate, move);
     }

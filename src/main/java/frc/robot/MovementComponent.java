@@ -9,6 +9,8 @@ public class MovementComponent extends ComponentBase {
     public static final double SPEED_MULT = 0.8;
     public static final double ROTATE_MULT = 0.65;
 
+    public static final double ROTATION_CORRECTION = 0.3;
+
     /** Creates and initialize the component with the given Robot.
      * @see ComponentBase#ComponentBase(Robot)
      */
@@ -32,7 +34,11 @@ public class MovementComponent extends ComponentBase {
         // Axis 5 is the right joystick up and down
 
         // Move the robot based on the inputs of the drive controller
-        robot.move(ROTATE_MULT * gamepad.getRawAxis(2), SPEED_MULT * -gamepad.getRawAxis(1));
+        double rotate = ROTATE_MULT * gamepad.getRawAxis(2);
+        double drive = SPEED_MULT * -gamepad.getRawAxis(1);
+        if (rotate == 0 && drive < 0) robot.move(rotate - 0.33, drive);
+        else if (rotate == 0 && drive > 0) robot.move(rotate + 0.2, drive);
+        else robot.move(rotate, drive);
     }
 
 }
